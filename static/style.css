@@ -4,3 +4,6 @@ body {
 .mkg-container{
     margin: 40px;
 }
+.mkg-container__form{
+    max-width: 400px;
+}

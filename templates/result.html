@@ -1,0 +1,18 @@
+{% extends "base_template.html" %}
+
+{% block title %}Bank Marketing prediction{% endblock %}
+{% block content %}
+<div>
+    {% for item in dataframe %}
+    <div>item</div>
+    <div>dataframe[item]</div>
+    {% endfor%}
+    <div>el resultado es
+        {% if result == 0 %}
+          positivo
+        {% else %}
+          negativo
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
