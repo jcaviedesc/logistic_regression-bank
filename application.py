@@ -15,13 +15,20 @@ app.config['SECRET_KEY'] = 'abcdefghijklmnopqrst..'
 @app.route('/result/')
 def result_prediction():
     data = {}
+    result_test = ""
     # datos_file = open('datos.txt')
     # data = json.loads(datos_file)
     # print(data)
     result_file = open("result.txt", "r")
     result_prediction = result_file.read()
-    
-    return render_template('result.html', dataframe=data, result=result_prediction[0])
+    if int(result_prediction) == 1:
+        result_test = "POSITIVO"
+    else:
+        result_test = "NEGATIVO"
+    print(result_prediction)
+    print(result_test)
+
+    return render_template('result.html', dataframe=data, result=result_test)
 
 @app.route('/bank-marketing/', methods=["GET", "POST"])
 def bank_marketing():
@@ -81,7 +88,7 @@ def bank_marketing():
             #Final prediction
             prediction = clf.predict(x_new_test)
             print("la resultado es=",prediction)
-            f = open("result.txt", "a")
+            f = open("result.txt", "w")
             f.write(str(prediction[0]))
             f.close()
       

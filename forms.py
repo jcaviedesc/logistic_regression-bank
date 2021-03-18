@@ -4,7 +4,7 @@ from wtforms.validators import Required
 from wtforms.widgets import Input
 
 class bankPredictionForm(FlaskForm):
-    age = IntegerField(validators=[Required("field required")])
+    age = IntegerField()
     job = SelectField(choices=['admin.', 'blue-collar', 'entrepreneur', 'housemaid', 'management', 'retired', 'self-employed', 'services', 'student', 'technician', 'unemployed', 'unknown'])
     marital = SelectField(choices=["married","divorced","single","unknown"])
     education = SelectField(choices=[
@@ -22,15 +22,15 @@ class bankPredictionForm(FlaskForm):
     contact = RadioField(choices=['cellular', 'telephone'])
     month= SelectField(choices=['apr', 'aug', 'dec', 'jul', 'jun', 'mar', 'may', 'nov', 'oct', 'sep'])
     day_of_week = SelectField(choices=['fri', 'mon', 'thu', 'tue', 'wed'])
-    duration = IntegerField(validators=[Required("field required")])
-    campaign = IntegerField(validators=[Required("field required")])
-    pdays = IntegerField(validators=[Required("field required")])
-    previous = IntegerField(validators=[Required("field required")])
+    duration = IntegerField()
+    campaign = IntegerField()
+    pdays = IntegerField()
+    previous = IntegerField()
     poutcome = RadioField(choices=['failure', 'nonexistent', 'success'])
-    emp_var_rate = DecimalField("emp.var.rate",id="emp.var.rate",_prefix="emp.var.rate", places=2, rounding=None, use_locale=False, number_format=None,  validators=[Required("field required")])
-    cons_price_idx = FloatField("cons.price.idx",id="cons.price.idx", _name="cons.price.idx", validators=[Required("field required")])
-    cons_conf_idx = FloatField("cons.conf.idx", id="cons.conf.idx", _name="cons.conf.idx", validators=[Required("field required")])
-    euribor3m = FloatField(validators=[Required("field required")])
-    nr_employed = FloatField("nr.employed",validators=[Required("field required")])
+    emp_var_rate = DecimalField("emp.var.rate",id="emp.var.rate",_prefix="emp.var.rate", places=2, rounding=None, use_locale=False, number_format=None)
+    cons_price_idx = FloatField("cons.price.idx",id="cons.price.idx", _name="cons.price.idx")
+    cons_conf_idx = FloatField("cons.conf.idx", id="cons.conf.idx", _name="cons.conf.idx")
+    euribor3m = FloatField()
+    nr_employed = FloatField("nr.employed")
 
     
