@@ -98,3 +98,60 @@ def bank_marketing():
         return render_template('bankMarketing.html', form=form)
     else:
         return render_template('bankMarketing.html', form=form)
+
+@app.route('/bank-excel/', methods=["GET", "POST"])
+def bank_url():
+    prediction = []
+    if request.method == 'POST':
+        url = request.form['url']
+
+        df = pd.read_csv(url)
+        df['emp.var.rate'] = df['emp.var.rate'].apply(lambda x: (x.replace(',','.'))).astype(float)
+        df['cons.price.idx'] = df['cons.price.idx'].apply(lambda x: (x.replace(',','.'))).astype(float)
+        df['cons.conf.idx'] = df['cons.conf.idx'].apply(lambda x: (x.replace(',','.'))).astype(float)
+        df['euribor3m'] = df['euribor3m'].apply(lambda x: (x.replace(',','.'))).astype(float)
+        df['nr.employed'] = df['nr.employed'].apply(lambda x: (x.replace(',','.'))).astype(float)
+        print(df.head())
+            
+        min_max_scaler_file = open('minMaxScaler.p', 'rb')
+        min_max_scaler = pickle.load(min_max_scaler_file)
+        min_max_scaler_file.close() 
+            
+        df[['age', 'duration', 'campaign', 'pdays', 'previous', 'emp.var.rate', 'cons.price.idx', 'cons.conf.idx', 'euribor3m', 'nr.employed']] = min_max_scaler.transform(df[['age', 'duration', 'campaign', 'pdays', 'previous', 'emp.var.rate', 'cons.price.idx', 'cons.conf.idx', 'euribor3m', 'nr.employed']])
+        print('\n=============================AFTER MIN_MAX_SCALER========================================\n')
+        print(df)
+
+        #OneHotEncoder. Attention: USE THE SAME ONEHOTENCODER OBJECT USED TO TRANSFORM THE TRAINING DATA
+        enc_file = open('oneHotEncoder.p', 'rb')
+        enc = pickle.load(enc_file)
+        enc_file.close()
+
+        enc_df = pd.DataFrame(enc.transform(df[['job','marital','education','default','housing', 'loan', 'contact', 'month', 'day_of_week', 'poutcome']]).toarray())
+        df = df.join(enc_df)
+        df = df.drop(['job','marital','education','default','housing', 'loan', 'contact', 'month', 'day_of_week', 'poutcome'],axis=1)
+        print('\n=======================AFTER OneHotEncoder ============================\n')
+        print(df)
+
+        #Feature Selection. Attention: USE THE SAME SELECTOR OBJECT USED TO TRANSFORM THE TRAINING DATA 
+
+        selector_file = open('selector.p','rb')
+        selector = pickle.load(selector_file)
+        selector_file.close()
+
+        cols = selector.get_support(indices=True)
+        print(cols)
+        x_new_test = df.iloc[:,cols]
+        print('\n=======================AFTER FEATURE SELECTION (Filter Method)============================\n')
+        print(x_new_test)
+
+        clf_file = open('clf.p', 'rb')
+        clf = pickle.load(clf_file)
+        clf_file.close()
+        #Final prediction
+        prediction = clf.predict(x_new_test)
+        print("la resultado es=",prediction)
+        f = open("result.txt", "w")
+        f.write(str(prediction))
+        f.close()
+        redirect(url_for('result_prediction'))
+    return render_template('bankExcel.html', results=prediction)

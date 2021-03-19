@@ -1,0 +1,40 @@
+{% extends "base_template.html" %}
+
+{% block title %}Bank Marketing prediction{% endblock %}
+{% block content %}
+<section>
+    <div class="title-header">
+        <h1 class="title">Bank Marketing prediction</h1>
+    </div>
+    <div class="mkg-container__form">
+        <form method="post">
+            <div class="field">
+                <label class="label" for="url">url datos</label>
+                <div class="control">
+                    <input class="input" name="url" id="url" type="text" placeholder="ej google sheets">
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-link">Predecir</button>
+                </div>
+            </div>
+        </form>
+        <div>
+            <table>
+                {% for result in results %}
+                  <tr>
+                    <td>
+                        {% if result == 1 %}
+                           Positivo
+                        {% else %}
+                           Negativo
+                        {% endif%}
+                    </td>
+                  </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

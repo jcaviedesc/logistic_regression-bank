@@ -1,9 +1,19 @@
-body {
-    margin: 40px;
+.title-header {
+    background-color: seagreen;
+    padding: 40px;
+    color: white;
 }
-.mkg-container{
-    margin: 40px;
+
+.title-header h1 {
+    color: white;
 }
+
 .mkg-container__form{
-    max-width: 400px;
+    max-width: 1280px;
+    margin: 40px;
+}
+.mkg-container__form .form-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

@@ -3,9 +3,11 @@
 {% block title %}Bank Marketing prediction{% endblock %}
 {% block content %}
 <section>
-    <h1 class="title">Bank Marketing prediction</h1>
+    <div class="title-header">
+        <h1 class="title">Bank Marketing prediction</h1>
+    </div>
     <div class="mkg-container__form">
-        <form method="post">
+        <form method="post" class="form-container">
             {{form.hidden_tag() }}
 
             {% for field in form %}
@@ -44,6 +46,7 @@
                 <div class="control">
                     <button type="submit" class="button is-link">Submit</button>
                 </div>
+            </div>
         </form>
     </div>
 </section>
