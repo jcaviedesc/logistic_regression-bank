@@ -21,9 +21,16 @@
             </div>
         </form>
         <div>
-            <table>
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th><abbr title="Position">Pos</abbr></th>
+                      <th>Resultado</th>
+                    </tr>
+                  </thead>
                 {% for result in results %}
                   <tr>
+                    <td>{{loop.index}}</td>
                     <td>
                         {% if result == 1 %}
                            Positivo

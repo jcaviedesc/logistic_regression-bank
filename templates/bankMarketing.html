@@ -10,38 +10,35 @@
         <form method="post" class="form-container">
             {{form.hidden_tag() }}
 
-            {% for field in form %}
-            <div class="field is-horizontal">
-                <div class="field-label">
+            <div class="content-data">
+                {% for field in form %}
+                <div class="field field-overides">
                     {{ field.label(class="label")}}
-                </div>
-                <div class="field-body">
-                    <div class="field">
-                        <div class="control">
-                            {% if field.type == "RadioField" %}
-                            {% for subfield in field %}
-                            <label class="radio">
-                                {{ subfield }}
-                                {{subfield.label}}
-                            </label>
-                            {% endfor %}
-                            {% elif field.type == "SelectField"%}
-                            <div class="select">
-                                {{ field(class="input")}}
-                            </div>
-                            {% else %}
-                            {{ field(class="input") }}
-                            {% endif %}
+                    <div class="control">
+                        {% if field.type == "RadioField" %}
+                        {% for subfield in field %}
+                        <label class="radio">
+                            {{ subfield }}
+                            {{subfield.label}}
+                        </label>
+                        {% endfor %}
+                        {% elif field.type == "SelectField"%}
+                        <div class="select">
+                            {{ field(class="input")}}
                         </div>
+                        {% else %}
+                        {{ field(class="input") }}
+                        {% endif %}
                     </div>
+                    {% for error in field.errors %}
+                    <p class="help is-danger">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
                 </div>
-                {% for error in field.errors %}
-                <p class="help is-danger">
-                    {{ error }}
-                </p>
                 {% endfor %}
             </div>
-            {% endfor %}
+            <br />
             <div class="field is-grouped">
                 <div class="control">
                     <button type="submit" class="button is-link">Submit</button>
